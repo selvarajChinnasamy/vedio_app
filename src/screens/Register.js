@@ -1,9 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, Button } from 'react-native';
 
-const Register = () => {
+const Register = ({goTo}) => {
     return (
+        <>
         <Text>Register!</Text>
+        <Button title="login" onPress={() =>goTo('login')} />
+        </>
     );
 }
 

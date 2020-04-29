@@ -23,12 +23,20 @@ const clearSession = () => {
 };
 
 const onRequestSuccess = (response) => {
-	const tokens = response.tokens.reduce((prev, item) => ({
-		...prev,
-		[item.type]: item,
-	}), {});
-	store.dispatch(actionCreators.update({ tokens, user: response.user }));
-	setSessionTimeout(tokens.access.expiresIn);
+	console.log('response', response);
+	const tokens = {
+		access: {
+			type: 'null',
+			value: 'null',
+			expiresIn: 'null',
+		},
+		refresh: {
+			type: 'null',
+			value: 'null',
+		},
+	};
+	store.dispatch(actionCreators.update({ tokens, user: response }));
+	// setSessionTimeout(tokens.access.expiresIn);
 };
 
 const onRequestFailed = (exception) => {
@@ -38,7 +46,7 @@ const onRequestFailed = (exception) => {
 
 export const refreshToken = () => {
 	const session = selectors.get();
-
+	console.log(session);
 	if (!session.tokens.refresh.value || !session.user.id) {
 		return Promise.reject();
 	}
@@ -49,7 +57,7 @@ export const refreshToken = () => {
 };
 
 export const authenticate = (email, password) =>
-	api.authenticate(email, password)
+	api.dummyAuthenticate(email, password)
 	.then(onRequestSuccess)
 	.catch(onRequestFailed);
 

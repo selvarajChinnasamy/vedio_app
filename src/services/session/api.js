@@ -4,12 +4,17 @@ import { fetchApi } from '../api';
 import apiConfig from '../api/config';
 
 const endPoints = {
+	dummyAuthenticate: '/posts/1',
 	authenticate: '/users/auth',
 	revoke: '/users/auth/revoke',
 	refresh: '/users/auth/refresh',
 };
 
 export const authenticate = (email, password) => fetchApi(endPoints.authenticate, {}, 'post', {
+	Authorization: `Basic ${new Buffer(`${email}:${password}`).toString('base64')}`,
+});
+
+export const dummyAuthenticate = (email, password) => fetchApi(endPoints.dummyAuthenticate, {}, 'get', {
 	Authorization: `Basic ${new Buffer(`${email}:${password}`).toString('base64')}`,
 });
 
